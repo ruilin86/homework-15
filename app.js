@@ -23,19 +23,22 @@ function getData(id) {
 // create a function to create bar chart and bubble chart
 function getPlot(id) {
     d3.json("samples.json").then(data=> {
-        console.log(data);
-        var ids=data.samples[0].otu_ids;
-        var top_ids=ids.slice(0,10).reverse();
-        var otu_id=top_ids.map(d=>"OTU "+d);
-        console.log(otu_id);
-
-        var values=data.samples[0].sample_values;
+        var samples= data.samples;
+        var arr = samples.filter(sample => sample.id == id);
+        var sample= arr[0];
+;
+        var values=sample.sample_values;
         var top_values=values.slice(0,10).reverse();
         console.log(top_values);
 
-        var labels=data.samples[0].otu_labels;
+        var labels=sample.otu_labels;
         var top_labels=labels.slice(0,10).reverse();
         console.log(top_labels);
+
+        var ids=sample.otu_ids;
+        var top_ids=ids.slice(0,10).reverse();
+        var otu_id=top_ids.map(d=>"OTU "+d);
+        console.log(otu_id);
 
         var trace1={
             x: top_values,
